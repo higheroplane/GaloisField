@@ -36,28 +36,28 @@ vector<int> naive_mul(const vector<int>& x, const vector<int>& y)
     return res;
 }
 
-vector<int> karatsuba_mul(const vector<int>& x, const vector<int>& y)
+vector<int> karatsuba_mul(const vector<int>& _x, const vector<int>& _y)
 {
 
-
+    vector <int> x(_x), y(_y);
     int len = 0;
-    if (x.size() > y.size()) len = x.size();
-    else len  = y.size();
+    if (x.size() > y.size()) {len = x.size(); y.reserve(len); y.insert(y.end(), x.size() - y.size(), 0);}
+    else {len  = y.size(); x.reserve(len); x.insert(x.end(), y.size() - x.size(), 0);}
 
+    x.reserve (len);
+    
 
-    vector<int> res(2 * len);
+    vector <int> res(2 * len);
 
     if (len <= 50) {
         return naive_mul(x, y);
     }
 
     int k = len / 2, l = len/2 + len%2;
-
     vector<int> Xr {x.begin(), x.begin() + k};
     vector<int> Xl {x.begin() + k, x.end()};
     vector<int> Yr {y.begin(), y.begin() + k};
     vector<int> Yl {y.begin() + k, y.end()};
-
 
     vector<int> P1 = karatsuba_mul(Xl, Yl);
     vector<int> P2 = karatsuba_mul(Xr, Yr);

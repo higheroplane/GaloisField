@@ -1,21 +1,53 @@
-#include "karatsuba.h"
+#include "bigint.h"
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
+
+int my_rand () {return rand()%10;}
 
 int main ()
 {
-    vector<int> n1 = {1, 2, 3, 4, 5, 6, 7, 8, 1, 5, 6, 6, 5};
-    vector<int> n2 = {4, 2, 3, 4, 5, 6, 5, 6, 5, 3, 3, 4, 5};
+    vector <int> a ({0, 0,1,7,3,4,4,8});
+    vector <int> b ({0,0,1});
+    
+    FILE * f = fopen ("tm.txt", "w");
 
-    vector<int> res = naive_mul (n1, n2);
+    BigInt A (vector<int> (3, 4)), B(vector <int> (100, 1)), C (vector<int>(20000,0));
+    
+    A.print();
+    B.print();
+    int eq = 0;
+    for (int i = 1000; i < 100000; i += 1000)
+    {
+        eq = 0;        
+        for (int j = 1; j < 5000; j += 100)
+        {
+            A = BigInt (vector <int> (i, 2)),  B = BigInt (vector <int> (j, 2));  
+            
+            int time1 = 0, time2 = 0;
 
-    finalize (res);
+            time1 = clock();
+            C = A*B;
+            time1 = clock() - time1;
+            
+            time2 = clock();
+            C = BigInt (naive_mul (A.num, B.num));
+            time2 = clock() - time2;
+            if (eq == 0 && time2 > time1) {eq = 1; printf ("charade you are\n\n");}
+            if (eq == 1) fprintf (f,"%d %d\n", i, j);
+            if (eq == 1) {eq = 2;}
+            //if (eq == 1) printf ("%d %d\n", i, j);
 
-    for (int i = 0; i < res.size(); i ++) printf ("%d ", res [i]); printf("\n");
+        }
+        
 
-    res = karatsuba_mul (n1, n2);
-
-    finalize (res);
-
-    for (int i = 0; i < res.size(); i ++) printf ("%d ", res [i]);
+    }
+    //(B*A).print();
+    //BigInt C(naive_mul(A.num, B.num));
+   // C.finalize();
+   // C.print();
+   // (B*A).print();
+    //print_vector ((A*B).num);
 
     return 0;
 }
