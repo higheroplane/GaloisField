@@ -11,6 +11,13 @@ void finalize(vector <int> num)
     }
 }
 
+int size(vector <int> num)
+{
+        int size = 0; 
+        for (size = num.size() - 1; num[size] == 0 && size > 0; size --);
+        return size + 1;
+}
+
 void print_vector (vector <int> vec) 
 {
     for (int i = 0; i < vec.size(); i ++) printf ("%d ", vec [i]); 
@@ -28,7 +35,7 @@ vector<int> naive_mul(const vector<int>& x, const vector<int>& y)
     int len = 0;
     if (x.size() > y.size()) len = x.size();
     else len = y.size();
-    vector<int> res(2 * len);
+    vector<int> res(x.size() + y.size());
 
     for (int i = 0; i < x.size(); i ++)
         for (int j = 0; j < y.size(); j ++) res[i + j] += x[i] * y[j];
@@ -41,6 +48,10 @@ vector<int> karatsuba_mul(const vector<int>& _x, const vector<int>& _y)
 
     vector <int> x(_x), y(_y);
     int len = 0;
+
+    if (size(x) < 6.6*pow(size(y), 0.585) + 60.7 || size(y) < 6.6*pow(size(x), 0.585) + 60.7) return naive_mul (x,y);
+
+
     if (x.size() > y.size()) {len = x.size(); y.reserve(len); y.insert(y.end(), x.size() - y.size(), 0);}
     else {len  = y.size(); x.reserve(len); x.insert(x.end(), y.size() - x.size(), 0);}
 

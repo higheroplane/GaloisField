@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <vector>
-
+#include <cmath>
 using namespace std;
 
 void print_vector (vector <int> vec);

@@ -6,10 +6,12 @@ class BigInt
     public:
     vector <int> num;
     bool sign = 0;
-    //int base;
+    int base;
+    void finalize();
+    ...
+
     vector<int> naive_mul(const vector<int>& x, const vector<int>& y);
     vector<int> karatsuba_mul(const vector<int>& x, const vector<int>& y);
-    void finalize();
     int len() const {return num.size();}
     int size() const
     {

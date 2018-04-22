@@ -18,16 +18,7 @@ class GF
     void PrintTable (int type); 
 };
 
-class Polynom
-{
-    private:    
-    int n;
-    int * coeff;
 
-    public:
-    Polynom (int _n, int * _coef);
-    
-}
 
 void EuclideAlg (int a, int b, int * x, int * y, int * d);
 
